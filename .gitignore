@@ -130,3 +130,6 @@ dmypy.json
 
 # other dirs
 data/
+
+#other files
+config*
