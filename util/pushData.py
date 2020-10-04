@@ -28,16 +28,19 @@ cur = connection.cursor()
 df = pd.read_pickle('../data/arxiv-last50years-data.pickle')
 
 for i in tqdm(df.index):
-    cur.execute(inserytQuery, [str(df.id[i]), str(df.submitter[i]),
-                               str(df.title[i]), 
-                               str(df.categories[i]),
-                               str(df.abstract[i]), str(df.update_date[i]), str(df.authors_parsed[i]), int(df.year[i]),
-                               str(df.pdf_link[i]), str(df.pages[i]), 'pipeline'
-                              
-                            ])
-    
-    if i%100==0:
-        connection.commit()
+    try:
+        cur.execute(inserytQuery, [str(df.id[i]), str(df.submitter[i]),
+                                str(df.title[i]), 
+                                str(df.categories[i]),
+                                str(df.abstract[i]), str(df.update_date[i]), str(df.authors_parsed[i]), int(df.year[i]),
+                                str(df.pdf_link[i]), str(df.pages[i]), 'pipeline'
+                                
+                                ])
+        
+        if i%100==0:
+            connection.commit()
+    except:
+        continue
     
 connection.commit()
 
